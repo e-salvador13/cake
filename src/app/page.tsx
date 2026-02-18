@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useCallback } from 'react';
 import { Week, getCurrentWeek, getAllWeeks, addTask, toggleTask, deleteTask } from '@/lib/storage';
+import { seedHistoricalData } from '@/lib/seedData';
 import CakeCard from '@/components/CakeCard';
 import WeekArchive from '@/components/WeekArchive';
 
@@ -12,6 +13,9 @@ export default function Home() {
 
   // Load data on mount
   useEffect(() => {
+    // Seed historical data on first load
+    seedHistoricalData();
+    
     const week = getCurrentWeek();
     setCurrentWeek(week);
     setAllWeeks(getAllWeeks());
