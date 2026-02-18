@@ -1,12 +1,13 @@
-import { Week, Task, generateId, saveData, loadData } from './storage';
+import { Week, generateId, saveData, loadData, getWeekNumber, getCakeByWeekNumber } from './storage';
 
 // Historical cake data transcribed from photos
+// Each week gets a unique cake based on its week number
 export const historicalCakes: Week[] = [
   {
     id: generateId(),
     startDate: '2026-01-12',
     endDate: '2026-01-16',
-    cakeEmoji: '🎂',
+    cakeEmoji: getCakeByWeekNumber(getWeekNumber(new Date('2026-01-12'))),
     tasks: [
       { id: generateId(), text: 'Send Regional Manager Email (includes PM 13+)', completed: true },
       { id: generateId(), text: 'Get 3 CSMs (like Monica, NC) with the program to handle/document cases', completed: true },
@@ -18,7 +19,7 @@ export const historicalCakes: Week[] = [
     id: generateId(),
     startDate: '2026-01-19',
     endDate: '2026-01-24',
-    cakeEmoji: '🍰',
+    cakeEmoji: getCakeByWeekNumber(getWeekNumber(new Date('2026-01-19'))),
     tasks: [
       { id: generateId(), text: 'Send WB/GoldOaks Regional Manager Emails', completed: true },
       { id: generateId(), text: 'Create Baseball views on Metabase', completed: true },
@@ -30,7 +31,7 @@ export const historicalCakes: Week[] = [
     id: generateId(),
     startDate: '2026-01-26',
     endDate: '2026-01-30',
-    cakeEmoji: '🧁',
+    cakeEmoji: getCakeByWeekNumber(getWeekNumber(new Date('2026-01-26'))),
     tasks: [
       { id: generateId(), text: 'Send 25,000 Bug Free emails to users missing from PS', completed: true },
       { id: generateId(), text: 'Make heartbeat chart publicly published', completed: true },
@@ -42,7 +43,7 @@ export const historicalCakes: Week[] = [
     id: generateId(),
     startDate: '2026-02-02',
     endDate: '2026-02-06',
-    cakeEmoji: '🎂',
+    cakeEmoji: getCakeByWeekNumber(getWeekNumber(new Date('2026-02-02'))),
     tasks: [
       { id: generateId(), text: 'Send 70k emails to PHA + Leads audience currently excluded from Yardi', completed: true },
       { id: generateId(), text: 'Use the HB chart to read all 5 beds on PS', completed: true },
