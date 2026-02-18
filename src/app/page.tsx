@@ -83,6 +83,38 @@ export default function Home() {
     }
   }, [currentWeek]);
 
+  // Handlers for any week (archive)
+  const handleArchiveToggleTask = useCallback((weekId: string, taskId: string) => {
+    const updatedWeek = toggleTask(weekId, taskId);
+    if (updatedWeek) {
+      setAllWeeks(getAllWeeks());
+      // Also update current week if it was modified
+      if (currentWeek && weekId === currentWeek.id) {
+        setCurrentWeek(updatedWeek);
+      }
+    }
+  }, [currentWeek]);
+
+  const handleArchiveDeleteTask = useCallback((weekId: string, taskId: string) => {
+    const updatedWeek = deleteTask(weekId, taskId);
+    if (updatedWeek) {
+      setAllWeeks(getAllWeeks());
+      if (currentWeek && weekId === currentWeek.id) {
+        setCurrentWeek(updatedWeek);
+      }
+    }
+  }, [currentWeek]);
+
+  const handleArchiveEditTask = useCallback((weekId: string, taskId: string, newText: string) => {
+    const updatedWeek = editTask(weekId, taskId, newText);
+    if (updatedWeek) {
+      setAllWeeks(getAllWeeks());
+      if (currentWeek && weekId === currentWeek.id) {
+        setCurrentWeek(updatedWeek);
+      }
+    }
+  }, [currentWeek]);
+
   // Export data as JSON file
   const handleExport = () => {
     const dataStr = exportData();
@@ -307,7 +339,10 @@ export default function Home() {
         {currentWeek && (
           <WeekArchive 
             weeks={allWeeks} 
-            currentWeekId={currentWeek.id} 
+            currentWeekId={currentWeek.id}
+            onToggleTask={handleArchiveToggleTask}
+            onDeleteTask={handleArchiveDeleteTask}
+            onEditTask={handleArchiveEditTask}
           />
         )}
       </section>

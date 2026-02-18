@@ -11,6 +11,7 @@ interface TaskListProps {
   onDeleteTask: (taskId: string) => void;
   onEditTask?: (taskId: string, newText: string) => void;
   editable?: boolean;
+  canAdd?: boolean;
   compact?: boolean;
 }
 
@@ -21,8 +22,11 @@ export default function TaskList({
   onDeleteTask,
   onEditTask,
   editable = true,
+  canAdd,
   compact = false,
 }: TaskListProps) {
+  // Default canAdd to editable if not specified
+  const showAddForm = canAdd !== undefined ? canAdd : editable;
   const [newTaskText, setNewTaskText] = useState('');
   const [editingTaskId, setEditingTaskId] = useState<string | null>(null);
   const [editText, setEditText] = useState('');
@@ -158,25 +162,25 @@ export default function TaskList({
                 </span>
               )}
 
-              {/* Action Buttons */}
+              {/* Action Buttons - Always visible */}
               {editable && editingTaskId !== task.id && (
-                <div className="flex items-center gap-1">
+                <div className="flex items-center gap-2">
                   {/* Edit Button */}
                   {onEditTask && (
                     <button
                       onClick={() => startEditing(task)}
                       className={`
-                        ${compact ? 'p-1' : 'p-2'}
-                        opacity-0 group-hover:opacity-100 
-                        md:opacity-0 active:opacity-100
-                        text-stone-400 hover:text-amber-500 active:text-amber-600
+                        ${compact ? 'w-8 h-8' : 'w-10 h-10'}
+                        flex items-center justify-center
+                        bg-amber-100 text-amber-600
+                        hover:bg-amber-200 active:bg-amber-300 active:scale-95
                         transition-all duration-200
-                        rounded-full hover:bg-amber-50
+                        rounded-lg
                         touch-manipulation
                       `}
                       title="Edit task"
                     >
-                      <svg className={`${compact ? 'w-3 h-3' : 'w-5 h-5 md:w-4 md:h-4'}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <svg className={`${compact ? 'w-4 h-4' : 'w-5 h-5'}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
                       </svg>
                     </button>
@@ -186,17 +190,17 @@ export default function TaskList({
                   <button
                     onClick={() => onDeleteTask(task.id)}
                     className={`
-                      ${compact ? 'p-1' : 'p-2'}
-                      opacity-0 group-hover:opacity-100
-                      md:opacity-0 active:opacity-100
-                      text-stone-400 hover:text-red-500 active:text-red-600
+                      ${compact ? 'w-8 h-8' : 'w-10 h-10'}
+                      flex items-center justify-center
+                      bg-red-100 text-red-500
+                      hover:bg-red-200 active:bg-red-300 active:scale-95
                       transition-all duration-200
-                      rounded-full hover:bg-red-50
+                      rounded-lg
                       touch-manipulation
                     `}
                     title="Delete task"
                   >
-                    <svg className={`${compact ? 'w-3 h-3' : 'w-5 h-5 md:w-4 md:h-4'}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <svg className={`${compact ? 'w-4 h-4' : 'w-5 h-5'}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
                     </svg>
                   </button>
@@ -208,7 +212,7 @@ export default function TaskList({
       </div>
 
       {/* Add Task Form */}
-      {editable && (
+      {showAddForm && (
         <form onSubmit={handleSubmit} className="flex gap-2">
           <input
             type="text"

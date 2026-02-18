@@ -114,7 +114,8 @@ export default function CakeCard({
             onToggleTask={onToggleTask || (() => {})}
             onDeleteTask={onDeleteTask || (() => {})}
             onEditTask={onEditTask}
-            editable={!!onAddTask}
+            editable={!!onAddTask || !!onEditTask || !!onDeleteTask}
+            canAdd={!!onAddTask}
           />
         </div>
       </div>
@@ -246,7 +247,8 @@ export default function CakeCard({
               onToggleTask={onToggleTask || (() => {})}
               onDeleteTask={onDeleteTask || (() => {})}
               onEditTask={onEditTask}
-              editable={!!onAddTask}
+              editable={!!onAddTask || !!onEditTask || !!onDeleteTask}
+              canAdd={!!onAddTask}
               compact={size === 'small' || size === 'archive'}
             />
           </div>

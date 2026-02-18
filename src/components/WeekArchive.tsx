@@ -6,9 +6,18 @@ import CakeCard from './CakeCard';
 interface WeekArchiveProps {
   weeks: Week[];
   currentWeekId: string;
+  onToggleTask?: (weekId: string, taskId: string) => void;
+  onDeleteTask?: (weekId: string, taskId: string) => void;
+  onEditTask?: (weekId: string, taskId: string, newText: string) => void;
 }
 
-export default function WeekArchive({ weeks, currentWeekId }: WeekArchiveProps) {
+export default function WeekArchive({ 
+  weeks, 
+  currentWeekId,
+  onToggleTask,
+  onDeleteTask,
+  onEditTask,
+}: WeekArchiveProps) {
   // Filter out current week and get past weeks
   const pastWeeks = weeks.filter(w => w.id !== currentWeekId);
 
@@ -83,6 +92,9 @@ export default function WeekArchive({ weeks, currentWeekId }: WeekArchiveProps) 
                       week={week}
                       size="archive"
                       showStats
+                      onToggleTask={onToggleTask ? (taskId) => onToggleTask(week.id, taskId) : undefined}
+                      onDeleteTask={onDeleteTask ? (taskId) => onDeleteTask(week.id, taskId) : undefined}
+                      onEditTask={onEditTask ? (taskId, newText) => onEditTask(week.id, taskId, newText) : undefined}
                     />
                   </div>
                 );
